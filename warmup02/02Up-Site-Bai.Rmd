@@ -1,0 +1,67 @@
+---
+title: "Up02-Site-Bai.Rmd"
+author: "Site Bai"
+date: "9/12/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plyr)
+github <- 'https://github.com/ucb-stat133/stat133-hws-fall17/'
+repo <- 'raw/master/warmup02/data/nba2017-salary-points.RData'
+download.file(url=paste0(github,repo),
+              destfile = "nba2017-salary-points.RData")
+salary_points <- load( "nba2017-salary-points.RData")
+
+ls()
+```
+
+```{r}
+mode(experience)
+mode(github)
+mode(player)
+mode(points)
+mode(team)
+mode(points1)
+mode(points2)
+mode(points3)
+is.vector(github)
+is.atomic(player)
+class(position)
+#what flavor is each vector? 
+
+length(player)
+length(team)
+length(points)
+length(points1)
+length(points2)
+length(points3)
+```
+
+```{r}
+summary(player)
+summary(salary)
+sd(salary)
+hist(salary)
+boxplot(salary)
+```
+
+```{r}
+is.factor(team)
+class(team)
+position_fac <- factor(position)
+teamf <- count(team)
+teamf
+n <- sum(teamf$freq)
+rlfr <- teamf$freq/n
+rlfr
+barplot(rlfr)
+barplot(teamf$freq)
+```
+This plot shows that the SD is significantly different.
+```{r}
+
+
+```
+
