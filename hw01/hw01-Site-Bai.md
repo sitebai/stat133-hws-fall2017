@@ -8,9 +8,10 @@ Site Bai
 
 ``` r
 load("data/nba2017-salary-points.RData")
-nbasalary <- salary
-mnbasalary <- paste(format(round(nbasalary / 1e6,2),trim=TRUE)) 
+salary <- round(salary/1000000,2)
+mnbasalary <- salary
 mnbasalary <- as.integer(mnbasalary)
+
 is.integer(mnbasalary)
 ```
 
@@ -83,7 +84,7 @@ y_bar =sum(Y)/n
 cat(y_bar)
 ```
 
-    ## 6187014
+    ## 6.186689
 
 ``` r
 var_x =sum((X-x_bar)^2)/(n-1)
@@ -97,7 +98,7 @@ var_y =sum((Y-y_bar)^2)/(n-1)
 cat(var_y)
 ```
 
-    ## 4.318973e+13
+    ## 43.19524
 
 ``` r
 sdx <- sqrt(var_x)
@@ -111,21 +112,22 @@ cov_xy =sum((X-x_bar)*(Y-y_bar))/(n-1)
 cat(cov_xy)
 ```
 
-    ## 2046212512
+    ## 2046.424
 
 ``` r
 sdy <- sqrt(var_y)
+
 cat(sdy)
 ```
 
-    ## 6571890
+    ## 6.572309
 
 ``` r
 cor_xy =cov_xy/(sdx*sdy)
 cat(cor_xy)
 ```
 
-    ## 0.6367043
+    ## 0.6367296
 
 4)Simple Linear Regression
 ==========================
@@ -135,22 +137,23 @@ b1 <- cor_xy*(sdy/sdx)
 cat(b1)
 ```
 
-    ## 8556.681
+    ## 0.008557567
 
 ``` r
 b0 <- y_bar-b1*x_bar
 cat(b0)
 ```
 
-    ## 1509886
+    ## 1.509077
 
 ``` r
 y_hat =b0+b1*X
+
 summary(y_hat)
 ```
 
-    ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    ##  1510000  2845000  5206000  6187000  8184000 23400000
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##   1.509   2.844   5.206   6.187   8.184  23.400
 
 Intepretations: \* The intercept of the regression line is 1509886, which means that is the point a player get is 0, the salary of this player is 1509886.
 \* The slope b1 shows that one unit change in points leads to 8556.681 increase in salary Regression Equation:
@@ -161,35 +164,35 @@ y_hat1 =b0+b1*0
 cat(y_hat1)
 ```
 
-    ## 1509886
+    ## 1.509077
 
 ``` r
 y_hat2 =b0+b1*100
 cat(y_hat2)
 ```
 
-    ## 2365554
+    ## 2.364833
 
 ``` r
 y_hat3 =b0+b1*500
 cat(y_hat3)
 ```
 
-    ## 5788226
+    ## 5.78786
 
 ``` r
 y_hat4=b0+b1*1000
 cat(y_hat4)
 ```
 
-    ## 10066566
+    ## 10.06664
 
 ``` r
 y_hat5 =b0+b1*2000
 cat(y_hat5)
 ```
 
-    ## 18623247
+    ## 18.62421
 
 5)Plotting the regression line
 ==============================
@@ -224,7 +227,7 @@ Rsquare <- 1-(rss/tss)
 Rsquare
 ```
 
-    ## [1] 0.4053923
+    ## [1] 0.4054246
 
 7)
 ==
