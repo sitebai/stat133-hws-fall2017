@@ -213,7 +213,7 @@ text(c(2500,2000),c(20,25),labels=c("reg","lowess"))
 
 ![](hw01-Site-Bai_files/figure-markdown_github/unnamed-chunk-6-1.png) Regression residuals and coefficient of Determination $ R^2 $
 $$ ei=Yi-\\hat{Y} $$
- 6) Regression residuals and Coefficient of Determination
+ \# 6) Regression residuals and Coefficient of Determination
 *R*<sup>2</sup>
 
 ``` r
@@ -227,7 +227,10 @@ Rsquare
     ## [1] 0.4053923
 
 7)
-\#\#a)Exploring Positionn and Experience
+==
+
+a)Exploring Positionn and Experience
+------------------------------------
 
 ``` r
 reg1 <- lm(salary~experience)
