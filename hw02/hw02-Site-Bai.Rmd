@@ -19,18 +19,43 @@ is.factor(NBA17base$Position)
 * **Manipulating R_csv.**
 ```{r}
 nba17readr <- read_csv('nba2017-player-statistics.csv')
+spec(nba17readr)
 nba17readr$Position <- factor(nba17readr$Position)
+is.factor(nba17readr$Position)
+nba17readr <- read_csv('nba2017-player-statistics.csv',col_types =list(Player = col_character(),
+                Team = col_character(),
+                Position=col_factor(c("C","PF","PG","SG","SF")),
+                Experience=col_character(),
+                Salary=col_double(),
+                 Rank = col_integer(),
+                Age = col_integer(),
+                GP = col_integer(),
+                GS = col_integer(),
+                MIN = col_integer(),
+                FGM = col_integer(),
+                FGA = col_integer(),
+                Points3 = col_integer(),
+                Points3_atts = col_integer(),
+                Points2 = col_integer(),
+                Points2_atts = col_integer(),
+                FTM = col_integer(),
+                FTA = col_integer(),
+                OREB = col_integer(),
+                DREB = col_integer(),
+                AST = col_integer(),
+                STL = col_integer(),
+                BLK = col_integer(),
+                TO = col_integer()
+                      ) )
 str(nba17readr)
 ```
 * **Right after importing the data.**
 ```{r}
-NBA17base$Experience[NBA17base$Experience =="R"] <- "0"
-experience0 <- as.integer(NBA17base$Experience)
-
-
+NBA17base$Experience[NBA17base$Experience=="R"] <- "0"
+NBA17base$Experience <- as.integer(NBA17base$Experience)
+NBA17base$Experience
 ```
 * **Performance of players.**
-
 ```{r}
 PTS =NBA17base$Points3*3+NBA17base$Points2*2+
   NBA17base$FTM*1
@@ -47,19 +72,15 @@ EFF=(PTS+Rebounds+Ast+Stl+BLK-MissedFG-MissedFT-To)/Gp
 summary(EFF)
 ```
 * **Display the player name,team, salary and EFF value of the top 10 players in decreasing order. **
-* ** How to add a new column.**
 ```{r}
 NBA17base <- mutate(NBA17base,eff=EFF)
-select(slice(arrange(NBA17base,desc(eff)),1:10),Player)
-select(slice(arrange(NBA17base,desc(EFF)),1:10),Player,Team,Salary,eff)
-select(slice(arrange(NBA17base,desc(Salary)),1:10),Player,Salary)
+select(slice(arrange(NBA17base,desc(eff)),1:10),Player,eff)
 ```
 * **Provide the names of the players that have a negative EFF**
 ```{r}
 select(filter(NBA17base,eff <0),Player)
 ```
-* Use the function cor() to compute the correlation coefficients between EFF and all the
-variables used in the EFF formula.
+* **Use the function cor() to compute the correlation coefficients between EFF and all the variables used in the EFF formula.**
 ```{r}
 c1 <- cor(EFF,PTS)
 c2 <- cor(EFF,Rebounds)
@@ -71,25 +92,36 @@ c7 <- cor(EFF,-MissedFT)
 c8 <- cor(EFF,-NBA17base$TO)
 corr <- c(c1,c2,c3,c4,c5,c6,c7,c8)
 corr <- sort(corr,decreasing = TRUE)
-barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink")
+barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink",ylim =c(-1,1))
 
 ```
 * **Efficiency and salary.**
 ```{r, echo=TRUE}
 NBA17base$Salary <- round(NBA17base$Salary/1000000,2)
-plot(EFF,NBA17base$Salary)
+plot(EFF,NBA17base$Salary,
+     ylab = "Salary of all players",
+     main = "Efficiency and Salary")
 lines(lowess(EFF,NBA17base$Salary),lwd=3,col="blue")
-lm(NBA17base$Salary~EFF)
+reg_SE <- lm(NBA17base$Salary~EFF)
+abline(reg_SE,col="orange",lwd=3)
+text(c(30,30),c(27,17),labels=c("loess","regression"))
 
 ```
-* **Why NBA stars get paid so much more than NFL stars. **
+**Why NBA stars get paid so much more than NFL stars. **
 ```{r}
 NBA17base <- mutate(NBA17base,mpg=MIN/GP)
 players2 <- select(filter(NBA17base,mpg>20),Player,eff,Salary)
 is.data.frame(players2)
 
-plot(players2$eff,players2$Salary)
+plot(players2$eff,players2$Salary,xlab="More estblished players",
+      ylab="Salary",
+     main = "Players2 and Salary")
 lines(lowess(players2$eff,players2$Salary),lwd=3,col="green")
-lm(players2$Salary~players2$eff)
+reg_P2 <- lm(players2$Salary~players2$eff)
+abline(reg_P2,lwd=3,col="pink")
 ```
-.
+
+**What can you say about the relationship between these two variables for the set og "more established players?**
+
+- According to the y_hat =b0+b1*X, the b1 of the correlation between salary and the Eff of more established players is 0.69, which is slightly greater than 0.68, the b1 of the correlation between salary and EFF of all players. This means that those who play 20minutes or more per game get paied a little bit higher than those who do not.  
+ 

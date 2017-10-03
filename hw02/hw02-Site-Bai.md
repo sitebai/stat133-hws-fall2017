@@ -62,14 +62,76 @@ nba17readr <- read_csv('nba2017-player-statistics.csv')
     ## See spec(...) for full column specifications.
 
 ``` r
+spec(nba17readr)
+```
+
+    ## cols(
+    ##   Player = col_character(),
+    ##   Team = col_character(),
+    ##   Position = col_character(),
+    ##   Experience = col_character(),
+    ##   Salary = col_double(),
+    ##   Rank = col_integer(),
+    ##   Age = col_integer(),
+    ##   GP = col_integer(),
+    ##   GS = col_integer(),
+    ##   MIN = col_integer(),
+    ##   FGM = col_integer(),
+    ##   FGA = col_integer(),
+    ##   Points3 = col_integer(),
+    ##   Points3_atts = col_integer(),
+    ##   Points2 = col_integer(),
+    ##   Points2_atts = col_integer(),
+    ##   FTM = col_integer(),
+    ##   FTA = col_integer(),
+    ##   OREB = col_integer(),
+    ##   DREB = col_integer(),
+    ##   AST = col_integer(),
+    ##   STL = col_integer(),
+    ##   BLK = col_integer(),
+    ##   TO = col_integer()
+    ## )
+
+``` r
 nba17readr$Position <- factor(nba17readr$Position)
+is.factor(nba17readr$Position)
+```
+
+    ## [1] TRUE
+
+``` r
+nba17readr <- read_csv('nba2017-player-statistics.csv',col_types =list(Player = col_character(),
+                Team = col_character(),
+                Position=col_factor(c("C","PF","PG","SG","SF")),
+                Experience=col_character(),
+                Salary=col_double(),
+                 Rank = col_integer(),
+                Age = col_integer(),
+                GP = col_integer(),
+                GS = col_integer(),
+                MIN = col_integer(),
+                FGM = col_integer(),
+                FGA = col_integer(),
+                Points3 = col_integer(),
+                Points3_atts = col_integer(),
+                Points2 = col_integer(),
+                Points2_atts = col_integer(),
+                FTM = col_integer(),
+                FTA = col_integer(),
+                OREB = col_integer(),
+                DREB = col_integer(),
+                AST = col_integer(),
+                STL = col_integer(),
+                BLK = col_integer(),
+                TO = col_integer()
+                      ) )
 str(nba17readr)
 ```
 
     ## Classes 'tbl_df', 'tbl' and 'data.frame':    441 obs. of  24 variables:
     ##  $ Player      : chr  "Al Horford" "Amir Johnson" "Avery Bradley" "Demetrius Jackson" ...
     ##  $ Team        : chr  "BOS" "BOS" "BOS" "BOS" ...
-    ##  $ Position    : Factor w/ 5 levels "C","PF","PG",..: 1 2 5 3 4 3 4 5 4 2 ...
+    ##  $ Position    : Factor w/ 5 levels "C","PF","PG",..: 1 2 4 3 5 3 5 4 5 2 ...
     ##  $ Experience  : chr  "9" "11" "6" "R" ...
     ##  $ Salary      : num  26540100 12000000 8269663 1450000 1410598 ...
     ##  $ Rank        : int  4 6 5 15 11 1 3 13 8 10 ...
@@ -97,8 +159,11 @@ str(nba17readr)
     ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
     ##   .. ..$ Team        : list()
     ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-    ##   .. ..$ Position    : list()
-    ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+    ##   .. ..$ Position    :List of 3
+    ##   .. .. ..$ levels    : chr  "C" "PF" "PG" "SG" ...
+    ##   .. .. ..$ ordered   : logi FALSE
+    ##   .. .. ..$ include_na: logi FALSE
+    ##   .. .. ..- attr(*, "class")= chr  "collector_factor" "collector"
     ##   .. ..$ Experience  : list()
     ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
     ##   .. ..$ Salary      : list()
@@ -148,9 +213,31 @@ str(nba17readr)
 -   **Right after importing the data.**
 
 ``` r
-NBA17base$Experience[NBA17base$Experience =="R"] <- "0"
-experience0 <- as.integer(NBA17base$Experience)
+NBA17base$Experience[NBA17base$Experience=="R"] <- "0"
+NBA17base$Experience <- as.integer(NBA17base$Experience)
+NBA17base$Experience
 ```
+
+    ##   [1]  9 11  6  0  9  5  4  2  0  6  1  3  2  1  4 10 12 11  5  1  5 12 13
+    ##  [24]  0  8 13  5 13 15  5  2  5  1  7  7  0  0  4 10  2  1  5  0  6  7  2
+    ##  [47]  4  7  1  0  8  8  6  9  5  3  0  0  3  0  3 12  8 11  4 12  0 14  3
+    ##  [70] 10  3 10  3  3  6  2 17  4  4  0  3  8  4  1  9  0  3  8 12 11  0  7
+    ##  [93]  1  6  6  5 11  1  6  1  9  8  1  1  1  0 13  3  1  5  2  3  2  0 10
+    ## [116]  8  4  8  4  7  9  1  1  6  0  0  2 13  7  1  4  4 12  1  1  0  6  5
+    ## [139]  3  5  0  3  5  1  5  4  1  1  3  1  4  2  5  9 11  4  4  8  9  0 13
+    ## [162]  0  8  7  9  3  1  4  5  0  0  0  0  9  0  2  5  9  8  2  2  4  8  7
+    ## [185]  0  1  5  0  0  4  0  0  7  1  8  0  1  2  1  3  4  0  1  6  0  4  3
+    ## [208]  8  0  0  6  2  2  2  4 10  1  2  2  6 12  0 13  4  3  2  8  9  1  5
+    ## [231] 13  0 11  7 13  0  7 11  0  0  3  9  1  5  2 10 14  7 15 15  2  0  2
+    ## [254]  8  0  7  0 11  1  4  8  1 12  0  7  4  6 11  0 11  8  0 10 16  8  8
+    ## [277] 18 11  6  5 13  1  6  8  6  3  2 15  0  1  2  3  5  1  0  3  0  2  5
+    ## [300]  2  1  4 12  5  8  0  3  7  3  0  8  5  0  2  2  1  8  9 12  3 18  0
+    ## [323]  0 15  6  3  3  4  6  6  0  2  4  4  2  1  2  0  7  7  1  2  0 12  0
+    ## [346]  5  0  3 16  1  8  4  8  6  4  1  0  7  6  4  5  4  7  6  0  3  2  0
+    ## [369]  3 12 18  0  2  4 10  0  2  0  1  3  7  0  8  9  3  0  7  6  0  8  2
+    ## [392]  0 10  0  7  7  1  2  2  8  6  3  7  1  0  1  7  5  3  1  2  0  9  1
+    ## [415]  0  0  2  2  1 12 16  9  2  4  6  2  1  3  5  0  1  0  2  6  9 13  0
+    ## [438] 11  2  0 15
 
 -   **Performance of players.**
 
@@ -174,62 +261,25 @@ summary(EFF)
     ##  -0.600   5.452   9.090  10.140  13.250  33.840
 
 -   **Display the player name,team, salary and EFF value of the top 10 players in decreasing order. **
--   \*\* How to add a new column.\*\*
 
 ``` r
 NBA17base <- mutate(NBA17base,eff=EFF)
-select(slice(arrange(NBA17base,desc(eff)),1:10),Player)
-```
-
-    ## # A tibble: 10 x 1
-    ##                   Player
-    ##                    <chr>
-    ##  1     Russell Westbrook
-    ##  2          James Harden
-    ##  3         Anthony Davis
-    ##  4          LeBron James
-    ##  5    Karl-Anthony Towns
-    ##  6          Kevin Durant
-    ##  7 Giannis Antetokounmpo
-    ##  8      DeMarcus Cousins
-    ##  9          Jimmy Butler
-    ## 10      Hassan Whiteside
-
-``` r
-select(slice(arrange(NBA17base,desc(EFF)),1:10),Player,Team,Salary,eff)
-```
-
-    ## # A tibble: 10 x 4
-    ##                   Player  Team   Salary      eff
-    ##                    <chr> <chr>    <dbl>    <dbl>
-    ##  1     Russell Westbrook   OKC 26540100 33.83951
-    ##  2          James Harden   HOU 26540100 32.34568
-    ##  3         Anthony Davis   NOP 22116750 31.16000
-    ##  4          LeBron James   CLE 30963450 30.97297
-    ##  5    Karl-Anthony Towns   MIN  5960160 30.32927
-    ##  6          Kevin Durant   GSW 26540100 30.19355
-    ##  7 Giannis Antetokounmpo   MIL  2995421 28.37500
-    ##  8      DeMarcus Cousins   NOP 16957900 27.94118
-    ##  9          Jimmy Butler   CHI 17552209 25.60526
-    ## 10      Hassan Whiteside   MIA 22116750 25.36364
-
-``` r
-select(slice(arrange(NBA17base,desc(Salary)),1:10),Player,Salary)
+select(slice(arrange(NBA17base,desc(eff)),1:10),Player,eff)
 ```
 
     ## # A tibble: 10 x 2
-    ##               Player   Salary
-    ##                <chr>    <dbl>
-    ##  1      LeBron James 30963450
-    ##  2        Al Horford 26540100
-    ##  3     DeMar DeRozan 26540100
-    ##  4      Kevin Durant 26540100
-    ##  5      James Harden 26540100
-    ##  6 Russell Westbrook 26540100
-    ##  7       Mike Conley 26540100
-    ##  8     Dirk Nowitzki 25000000
-    ##  9   Carmelo Anthony 24559380
-    ## 10    Damian Lillard 24328425
+    ##                   Player      eff
+    ##                    <chr>    <dbl>
+    ##  1     Russell Westbrook 33.83951
+    ##  2          James Harden 32.34568
+    ##  3         Anthony Davis 31.16000
+    ##  4          LeBron James 30.97297
+    ##  5    Karl-Anthony Towns 30.32927
+    ##  6          Kevin Durant 30.19355
+    ##  7 Giannis Antetokounmpo 28.37500
+    ##  8      DeMarcus Cousins 27.94118
+    ##  9          Jimmy Butler 25.60526
+    ## 10      Hassan Whiteside 25.36364
 
 -   **Provide the names of the players that have a negative EFF**
 
@@ -240,7 +290,7 @@ select(filter(NBA17base,eff <0),Player)
     ##            Player
     ## 1 Patricio Garino
 
--   Use the function cor() to compute the correlation coefficients between EFF and all the variables used in the EFF formula.
+-   **Use the function cor() to compute the correlation coefficients between EFF and all the variables used in the EFF formula.**
 
 ``` r
 c1 <- cor(EFF,PTS)
@@ -253,32 +303,23 @@ c7 <- cor(EFF,-MissedFT)
 c8 <- cor(EFF,-NBA17base$TO)
 corr <- c(c1,c2,c3,c4,c5,c6,c7,c8)
 corr <- sort(corr,decreasing = TRUE)
-barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink")
+barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink",ylim =c(-1,1))
 ```
 
 ![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-7-1.png) \* **Efficiency and salary.**
 
 ``` r
 NBA17base$Salary <- round(NBA17base$Salary/1000000,2)
-plot(EFF,NBA17base$Salary)
+plot(EFF,NBA17base$Salary,
+     ylab = "Salary of all players",
+     main = "Efficiency and Salary")
 lines(lowess(EFF,NBA17base$Salary),lwd=3,col="blue")
+reg_SE <- lm(NBA17base$Salary~EFF)
+abline(reg_SE,col="orange",lwd=3)
+text(c(30,30),c(27,17),labels=c("loess","regression"))
 ```
 
-![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-8-1.png)
-
-``` r
-lm(NBA17base$Salary~EFF)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = NBA17base$Salary ~ EFF)
-    ## 
-    ## Coefficients:
-    ## (Intercept)          EFF  
-    ##     -0.7082       0.6802
-
--   **Why NBA stars get paid so much more than NFL stars. **
+![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-8-1.png) **Why NBA stars get paid so much more than NFL stars. **
 
 ``` r
 NBA17base <- mutate(NBA17base,mpg=MIN/GP)
@@ -289,22 +330,16 @@ is.data.frame(players2)
     ## [1] TRUE
 
 ``` r
-plot(players2$eff,players2$Salary)
+plot(players2$eff,players2$Salary,xlab="More estblished players",
+      ylab="Salary",
+     main = "Players2 and Salary")
 lines(lowess(players2$eff,players2$Salary),lwd=3,col="green")
+reg_P2 <- lm(players2$Salary~players2$eff)
+abline(reg_P2,lwd=3,col="pink")
 ```
 
 ![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
-``` r
-lm(players2$Salary~players2$eff)
-```
+**What can you say about the relationship between these two variables for the set og "more established players?**
 
-    ## 
-    ## Call:
-    ## lm(formula = players2$Salary ~ players2$eff)
-    ## 
-    ## Coefficients:
-    ##  (Intercept)  players2$eff  
-    ##      -0.6451        0.6907
-
-.
+-   According to the y\_hat =b0+b1\*X, the b1 of the correlation between salary and the Eff of more established players is 0.69, which is slightly greater than 0.68, the b1 of the correlation between salary and EFF of all players. This means that those who play 20minutes or more per game get paied a little bit higher than those who do not.
