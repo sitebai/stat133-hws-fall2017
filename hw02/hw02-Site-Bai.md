@@ -347,3 +347,10 @@ abline(reg_P2,lwd=3,col="pink")
 -   **What can you say about the relationship between these two variables for the set og "more established players?**
 
 -   According to the y\_hat =b0+b1\*X, the b1 of the correlation between salary and the Eff of more established players is 0.69, which is slightly greater than 0.68, the b1 of the correlation between salary and EFF of all players. This means that those who play 20minutes or more per game get paied a little bit higher than those who do not.
+
+-   **Comments and reflections.**
+-   `I had a problem with knitting the file because I made a typo in the beginning, which made me spending more than 3 hours to figure out which part is wrong. Finally, I knitted my file successfully.`
+-   `I need help for this assignment and I learned the different using of histogram and barplot from online source`
+-   `Overall I spent 7 hours to finish this assignment`
+-   `The most time-consuming part and frastrating part for me is knitting the file`
+-   `The most exciting part of this assignment is that I could figure out all problems I met if I have enough time`
