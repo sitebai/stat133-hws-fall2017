@@ -306,7 +306,9 @@ corr <- sort(corr,decreasing = TRUE)
 barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink",ylim =c(-1,1))
 ```
 
-![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-7-1.png) \* **Efficiency and salary.**
+![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+-   **Efficiency and salary.**
 
 ``` r
 NBA17base$Salary <- round(NBA17base$Salary/1000000,2)
@@ -319,7 +321,9 @@ abline(reg_SE,col="orange",lwd=3)
 text(c(30,30),c(27,17),labels=c("loess","regression"))
 ```
 
-![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-8-1.png) **Why NBA stars get paid so much more than NFL stars. **
+![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+-   **Why NBA stars get paid so much more than NFL stars.**
 
 ``` r
 NBA17base <- mutate(NBA17base,mpg=MIN/GP)
@@ -340,6 +344,6 @@ abline(reg_P2,lwd=3,col="pink")
 
 ![](hw02-Site-Bai_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
-**What can you say about the relationship between these two variables for the set og "more established players?**
+-   **What can you say about the relationship between these two variables for the set og "more established players?**
 
 -   According to the y\_hat =b0+b1\*X, the b1 of the correlation between salary and the Eff of more established players is 0.69, which is slightly greater than 0.68, the b1 of the correlation between salary and EFF of all players. This means that those who play 20minutes or more per game get paied a little bit higher than those who do not.
