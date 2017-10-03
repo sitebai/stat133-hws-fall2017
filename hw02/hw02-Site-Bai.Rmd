@@ -1,0 +1,95 @@
+---
+title: "hw02-Site-Bai.Rmd"
+author: "Site Bai"
+date: "9/28/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(dplyr)
+```
+* **Manipulating R.csv.**
+```{r}
+NBA17base <- read.csv('nba2017-player-statistics.csv',colClasses = c("character","character","factor","character","double","integer",rep('integer',18)))
+
+str(NBA17base)
+is.factor(NBA17base$Position)
+```
+* **Manipulating R_csv.**
+```{r}
+nba17readr <- read_csv('nba2017-player-statistics.csv')
+nba17readr$Position <- factor(nba17readr$Position)
+str(nba17readr)
+```
+* **Right after importing the data.**
+```{r}
+NBA17base$Experience[NBA17base$Experience =="R"] <- "0"
+experience0 <- as.integer(NBA17base$Experience)
+
+
+```
+* **Performance of players.**
+
+```{r}
+PTS =NBA17base$Points3*3+NBA17base$Points2*2+
+  NBA17base$FTM*1
+Rebounds =NBA17base$OREB+NBA17base$DREB
+MissedFG =NBA17base$FGA-NBA17base$FGM
+MissedFT =NBA17base$FTA-NBA17base$FTM
+Ast = NBA17base$AST
+Stl =NBA17base$STL
+BLK= NBA17base$BLK
+To= NBA17base$TO
+Gp  = NBA17base$GP
+
+EFF=(PTS+Rebounds+Ast+Stl+BLK-MissedFG-MissedFT-To)/Gp
+summary(EFF)
+```
+* **Display the player name,team, salary and EFF value of the top 10 players in decreasing order. **
+* ** How to add a new column.**
+```{r}
+NBA17base <- mutate(NBA17base,eff=EFF)
+select(slice(arrange(NBA17base,desc(eff)),1:10),Player)
+select(slice(arrange(NBA17base,desc(EFF)),1:10),Player,Team,Salary,eff)
+select(slice(arrange(NBA17base,desc(Salary)),1:10),Player,Salary)
+```
+* **Provide the names of the players that have a negative EFF**
+```{r}
+select(filter(NBA17base,eff <0),Player)
+```
+* Use the function cor() to compute the correlation coefficients between EFF and all the
+variables used in the EFF formula.
+```{r}
+c1 <- cor(EFF,PTS)
+c2 <- cor(EFF,Rebounds)
+c3 <- cor(EFF,NBA17base$AST)
+c4 <- cor(EFF,NBA17base$STL)
+c5 <- cor(EFF,NBA17base$BLK)
+c6 <- cor(EFF,-MissedFG)
+c7 <- cor(EFF,-MissedFT)
+c8 <- cor(EFF,-NBA17base$TO)
+corr <- c(c1,c2,c3,c4,c5,c6,c7,c8)
+corr <- sort(corr,decreasing = TRUE)
+barplot(corr,names.arg =c( "PTS","REB","STL","AST","BLK","MissedFT","MissedFG","TO"),col="pink")
+
+```
+* **Efficiency and salary.**
+```{r, echo=TRUE}
+NBA17base$Salary <- round(NBA17base$Salary/1000000,2)
+plot(EFF,NBA17base$Salary)
+lines(lowess(EFF,NBA17base$Salary),lwd=3,col="blue")
+lm(NBA17base$Salary~EFF)
+
+```
+* **Why NBA stars get paid so much more than NFL stars. **
+```{r}
+NBA17base <- mutate(NBA17base,mpg=MIN/GP)
+players2 <- select(filter(NBA17base,mpg>20),Player,eff,Salary)
+is.data.frame(players2)
+
+plot(players2$eff,players2$Salary)
+lines(lowess(players2$eff,players2$Salary),lwd=3,col="green")
+lm(players2$Salary~players2$eff)
+```
+.
