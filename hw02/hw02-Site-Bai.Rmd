@@ -112,8 +112,10 @@ text(c(30,30),c(27,17),labels=c("loess","regression"))
 * **Why NBA stars get paid so much more than NFL stars.**
 ```{r}
 NBA17base <- mutate(NBA17base,mpg=MIN/GP)
-players2 <- select(filter(NBA17base,mpg>20),Player,eff,Salary)
+players2 <- select(filter(NBA17base,mpg>=20),Player,eff,Salary)
+
 is.data.frame(players2)
+players2
 
 plot(players2$eff,players2$Salary,xlab="More estblished players",
       ylab="Salary",
