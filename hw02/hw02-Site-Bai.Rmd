@@ -5,20 +5,19 @@ date: "9/28/2017"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
+```{r}
 library(readr)
 library(dplyr)
 ```
 * **Manipulating R.csv.**
 ```{r}
+getwd()
 setwd("/Users/baibai/stat133/stat133-hws-fall17/hw02/data")
-NBA17base <- read.csv('nba2017-player-statistics.csv',colClasses = c("character","character","factor","character","double","integer",rep('integer',18)))
-
-str(NBA17base)
-is.factor(NBA17base$Position)
+NBA17base <- read.csv('nba2017-player-statistics.csv',colClasses = c('character','character','factor','character','real',rep('integer',19)))
 ```
 * **Manipulating R_csv.**
 ```{r}
+setwd("/Users/baibai/stat133/stat133-hws-fall17/hw02/data")
 nba17readr <- read_csv('nba2017-player-statistics.csv')
 spec(nba17readr)
 nba17readr$Position <- factor(nba17readr$Position)
