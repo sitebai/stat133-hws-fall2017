@@ -11,7 +11,6 @@ library(dplyr)
 ```
 * **Manipulating R.csv.**
 ```{r}
-
 setwd("/Users/baibai/stat133/stat133-hws-fall17/hw02/data")
 NBA17base <- read.csv('nba2017-player-statistics.csv',colClasses = c("character","character","factor","character","double","integer",rep('integer',18)))
 
@@ -72,6 +71,7 @@ Gp  = NBA17base$GP
 
 EFF=(PTS+Rebounds+Ast+Stl+BLK-MissedFG-MissedFT-To)/Gp
 summary(EFF)
+hist(EFF,main = "Histogram of EFF (Efficiency",col = "blue")
 ```
 * **Display the player name,team, salary and EFF value of the top 10 players in decreasing order. **
 ```{r}

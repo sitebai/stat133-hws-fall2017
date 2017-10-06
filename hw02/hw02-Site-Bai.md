@@ -255,6 +255,7 @@ Gp  = NBA17base$GP
 
 EFF=(PTS+Rebounds+Ast+Stl+BLK-MissedFG-MissedFT-To)/Gp
 summary(EFF)
+hist(EFF,main = "Histogram of EFF (Efficiency",col = "blue")
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
