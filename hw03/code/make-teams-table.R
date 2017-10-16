@@ -1,12 +1,18 @@
+# title: Data Preparation. 
+# Description: This script is about manipulating raw data and 
+# creating data dictionaries. 
+# Input: NBA roster data. 
+# Output: Data dictionaries. 
+
 
 library(dplyr)
 library(ggplot2)
 
+setwd("/Users/baibai/stat133/stat133-hws-fall17/hw03/code")
 
-roster <- read.csv("nba2017-roster.csv")
-stats <- read.csv("nba2017-stats.csv")
+roster <- read.csv("../data/nba2017-roster.csv",stringsAsFactors = FALSE)
+stats <- read.csv("../data/nba2017-stats.csv")
 roster$salary<- round(roster$salary/1000000,2)
-
 
 stats <- mutate(stats,missed_fg=field_goals_atts-field_goals_made)
 stats <- mutate(stats,missed_ft=points1_atts-points1_made)
@@ -15,15 +21,12 @@ totalpoints <- stats$points3_made*3+stats$points2_made*2+stats$points1_made
 stats <- mutate(stats,points=totalpoints)
 efficiency <- (stats$points+stats$rebounds+stats$assists+stats$steals+stats$blocks-stats$missed_fg-stats$missed_ft-stats$turnovers)/stats$games_played
 stats <- mutate(stats,eff=efficiency)
-summary(efficiency)
 
 sink(file='../output/efficiency-summary.txt')
 summary(efficiency)
 sink()
-stats
 
 # Merging Tables.
-
 free_throws <- stats$points1_made
 stats <- mutate(stats,free_throws=free_throws)
 point_2 <-stats$points2_made 
@@ -51,16 +54,15 @@ teams <- summarise(
 )
 
 largetable$team <- as.character(largetable$team)
-sink(file="stat133/stat133-hws-fall17/hw03/data/teams-summary.txt")
+sink(file="../data/teams-summary.txt")
 summary(teams)
 sink()
 
 
-write.csv(summary(teams),"stat133/stat133-hws-fall17/hw03/data/nba2017-teams.csv",row.names = FALSE)
+write.csv(summary(teams),"../data/nba2017-teams.csv",row.names = FALSE)
 
 #some graphics
 stars(teams[,-1],labels = teams$team)
-
 teams$team <- as.character(teams$team)
 pdf(file = "../images/teams_stars_plot.pdf")
 stars(teams[,-1],labels = teams$team)
@@ -76,7 +78,3 @@ ggplot(largetable,aes(x=experience,salary,label=team))+
 dev.off()
 
 
-#ranking of teams. 
-summarise(arrange(stats,desc(salary)),group_by(team))
-
-filter(largetable,team=='GSW')
