@@ -1,0 +1,109 @@
+---
+title: "Ranking teams.Rd"
+author: "Site Bai"
+date: "10/8/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE)
+roster <- read.csv("stat133/stat133-hws-fall17/hw03/data/nba2017-roster.csv")
+stats <- read.csv("stat133/stat133-hws-fall17/hw03/data/nba2017-stats.csv")
+team_salary <- summarise(
+  group_by(roster,team),
+  sum_salary=sum(salary)
+)
+team_salary$sum_salary <- round(team_salary$sum_salary/1000000,2)
+
+salary_rank <- arrange(team_salary,desc(sum_salary))
+salary_rank
+```
+
+```{r}
+ggplot(salary_rank,aes(x=reorder(team,sum_salary),y=sum_salary))+
+  geom_bar(stat='identity')+coord_flip()+
+  geom_hline(yintercept =mean(salary_rank$sum_salary),color="red")+
+  labs(x="Teams",y="Total Salary")+
+ggtitle("NBA Teams ranked by total salary")
+
+ ```
+# the bar chart 
+```{r }
+tp <- summarise(group_by(largetable,team),
+          total_points=sum(points))
+
+ggplot(tp,aes(x=reorder(team,total_points),y=total_points))+
+  geom_bar(stat = 'identity')+coord_flip()+
+  geom_hline(yintercept = mean(tp$total_points),color="red")+
+  labs(x="Teams",y="Total Points")+
+  ggtitle("NBA Teams ranked by total points")
+```
+# efficieny ranking. 
+```{r}
+eff_ranking <- summarise(group_by(largetable,team),
+          efficiency=sum(eff))
+
+ggplot(eff_ranking,aes(x=reorder(team,efficiency),y=efficiency))+
+  geom_bar(stat = "identity")+coord_flip()+
+  geom_hline(yintercept = mean(eff_ranking$efficiency),color="red")
+  
+```
+
+# Principal components Analysis. 
+```{r }
+free_throws <- stats$points1_made
+index  <- summarise(
+  group_by(largetable,team),
+  points3=sum(points3_made),
+  points2=sum(points2_made),
+  free_throws=sum(free_throws),
+  off_rebounds=sum(off_rebounds),
+  def_rebounds=sum(def_rebounds),
+  assists=sum(assists),
+  steals=sum(steals),
+  blocks=sum(blocks),
+  turnovers=sum(turnovers),
+  fouls=sum(fouls)
+  )
+
+pca
+names(pca)
+eigs <- data.frame(
+  eigenvalue=pca$sdev^2,
+  proportion=round(pca$sdev^2/sum(pca$sdev^2),3),
+  cumsumpro=cumsum(eigs$proportion)
+)
+eigs
+pc<- prcomp(index[2:11],scale.=TRUE)$x
+pc1_2 <- pc[,1:2]
+pc1_2 <- as.data.frame(pc1_2)
+pc1_2 <- mutate(pc1_2,team=index$team)
+
+ggplot(pc1_2,aes(x=PC1,y=PC2,label=team))+
+  geom_point()+
+  geom_text()
+s1 <- ((pca1$PC1-min(pca1$PC1))/(max(pca1$PC1)-min(pca1$PC1)))*100
+pc1_2 <- mutate(pc1_2,s1)
+
+ggplot(pc1_2,aes(x=reorder(team,s1),y=s1))+
+  geom_bar(stat = "identity")+coord_flip()+labs(x="Team",
+                                                y="Scores1")+
+  ggtitle("NBA Teams ranked by scaled PC1")
+```
+
+
+
+
+
+```{r cars}
+
+```
+
+
+
+```{r pressure, echo=FALSE}
+
+```
+.
