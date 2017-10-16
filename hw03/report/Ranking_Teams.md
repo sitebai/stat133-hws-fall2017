@@ -145,6 +145,34 @@ eigs
 
 ``` r
 pc<- prcomp(index[2:11],scale.=TRUE)$x
+pcrotation <- prcomp(index[2:11],scale.=TRUE)$rotation
+pcrotation
+```
+
+    ##                    PC1         PC2         PC3          PC4         PC5
+    ## points3      0.1121782 -0.65652993  0.28806873 -0.042637313  0.28657624
+    ## points2      0.3601766  0.32892544 -0.06763180 -0.347710703 -0.15173866
+    ## free_throws  0.3227564 -0.17651228  0.39157491  0.147596178 -0.21363792
+    ## off_rebounds 0.3029366  0.35931603  0.33884845 -0.288483019 -0.16571824
+    ## def_rebounds 0.3719432 -0.12808273  0.15026131 -0.492969442  0.26476256
+    ## assists      0.3125312 -0.44134618 -0.26294129 -0.088066602 -0.36972525
+    ## steals       0.3447256 -0.03540585 -0.48554101  0.177578661 -0.33549491
+    ## blocks       0.3162237  0.06131890 -0.48869371  0.003935374  0.65459381
+    ## turnovers    0.3353958 -0.02169833  0.08910421  0.532117541 -0.04471763
+    ## fouls        0.3072548  0.28954426  0.26469871  0.454751471  0.26814214
+    ##                       PC6         PC7         PC8         PC9         PC10
+    ## points3      -0.028435666  0.38167878  0.18027569 -0.20631322  0.409762462
+    ## points2      -0.088714347  0.07302430 -0.47216199 -0.35836740  0.499011524
+    ## free_throws  -0.487342521 -0.62732220  0.07726675 -0.08283563 -0.006875686
+    ## off_rebounds  0.283093235  0.13535335  0.64646479 -0.14735551 -0.124601143
+    ## def_rebounds  0.066309015 -0.04926346 -0.23787252  0.64632050 -0.168579984
+    ## assists       0.176019008  0.11785039 -0.18235775 -0.34086739 -0.547385461
+    ## steals       -0.303664534  0.25883825  0.32703573  0.41596580  0.246739300
+    ## blocks       -0.009954065 -0.30799231  0.23947533 -0.27071160 -0.057627209
+    ## turnovers     0.675777660 -0.18850849 -0.14308362  0.13524769  0.250947823
+    ## fouls        -0.298848473  0.47268121 -0.21462859 -0.04367200 -0.335087245
+
+``` r
 pc1_2 <- pc[,1:2]
 pc1_2 <- as.data.frame(pc1_2)
 pc1_2 <- mutate(pc1_2,team=index$team)
@@ -201,4 +229,6 @@ ggplot(pc1_2,aes(x=reorder(team,s1),y=s1))+
   ggtitle("NBA Teams ranked by scaled PC1")
 ```
 
-![](Ranking_Teams_files/figure-markdown_github/unnamed-chunk-5-2.png) \# `The graph of "NBA Teams ranked by sacled PC1 shows that the team 'GSW' is the most efficient`
+![](Ranking_Teams_files/figure-markdown_github/unnamed-chunk-5-2.png)
+
+### `The graph of "NBA Teams ranked by sacled PC1 shows that those team who have higher PC1 scores are well explained by the variance of def_rebounds,such as GSW, Min, ans SAS and so on`

@@ -90,6 +90,8 @@ eigs <- data.frame(
 eigs <- mutate(eigs,cumsumpro=cumsum(eigs$proportion))
 eigs
 pc<- prcomp(index[2:11],scale.=TRUE)$x
+pcrotation <- prcomp(index[2:11],scale.=TRUE)$rotation
+pcrotation
 pc1_2 <- pc[,1:2]
 pc1_2 <- as.data.frame(pc1_2)
 pc1_2 <- mutate(pc1_2,team=index$team)
@@ -106,6 +108,7 @@ ggplot(pc1_2,aes(x=reorder(team,s1),y=s1))+
                                                 y="Scores1")+
   ggtitle("NBA Teams ranked by scaled PC1")
 ```
-# `The graph of "NBA Teams ranked by sacled PC1 shows that the team 'GSW' is the most efficient `
+
+### `The graph of "NBA Teams ranked by sacled PC1 shows that those team who have higher PC1 scores are well explained by the variance of def_rebounds,such as GSW, Min, ans SAS and so on`
 
 
