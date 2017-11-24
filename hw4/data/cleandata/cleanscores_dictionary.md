@@ -49,9 +49,6 @@ a parenthesis ) means exclusion.
 ##### -`A+ [95 - 100]`
 
 6. Class of variables:
-Name                  Data Type 
-----                    -----
-hw1-hw9                 "numeric"
 
 | Name          | Class         | Scale |
 | ------------- |:-------------:| -----:|
