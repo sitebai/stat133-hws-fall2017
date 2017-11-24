@@ -1,0 +1,12 @@
+minimum  :  5.0000 
+maximum  :100.0000 
+percent10: 66.3000 
+percent90: 98.0000 
+quartile1: 84.0000 
+quartile3: 96.0000 
+range    : 95.0000 
+stdev    : 15.4852 
+median   : 92.0000 
+mean     : 86.3563 
+missing  :  0.0000 
+stdev    : 15.4852 
