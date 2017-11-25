@@ -1,8 +1,0 @@
-README.md
-================
-Site Bai
-11/3/2017
-
-library(shiny)
-
-runGitHub("stat133-hws-fall17","sitebai", subdir="hw4/app")
