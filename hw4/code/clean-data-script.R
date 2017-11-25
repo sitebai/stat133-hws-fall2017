@@ -62,7 +62,6 @@ grade <- cut(rawdata$overall,
                            "A","A+"),
                 right=TRUE
                 )
-rawdata$Grade <- grade
 
 
 

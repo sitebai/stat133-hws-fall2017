@@ -209,7 +209,7 @@ summary_stats <- function(x){
 
 
 print_stats<- function(x){
-  names <- format(names(x),width = max(nchar(names(x))))
+  names <- format(name s(x),width = max(nchar(names(x))))
   x <- as.numeric(x)
   x <- format(round(x,4),nsmall = 4)
   number <- length(x)
