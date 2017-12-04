@@ -218,13 +218,13 @@ acf(rtn2,plot=FALSE,lag.max = 1)
 ***
 
 ###### Reference:
-* ####### `https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/time-series/how-to/autocorrelation/interpret-the-results/autocorrelation-function-acf/`
-* ####### `https://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html#plotting-time-series`
-* ####### `https://finance.yahoo.com/screener`
-* ####### `http://www.stat.pitt.edu/stoffer/tsa4/R_toot.htm`
-* ####### `https://www.statmethods.net/advstats/timeseries.html`
-* ####### `https://www.scientificamerican.com/article/can-tesla-build-enough-electric-cars/`
-* ####### `https://petolau.github.io/Forecast-double-seasonal-time-series-with-multiple-linear-regression-in-R/`
+*  `https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/time-series/how-to/autocorrelation/interpret-the-results/autocorrelation-function-acf/`
+*  `https://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html#plotting-time-series`
+*  `https://finance.yahoo.com/screener`
+*  `http://www.stat.pitt.edu/stoffer/tsa4/R_toot.htm`
+*  `https://www.statmethods.net/advstats/timeseries.html`
+*  `https://www.scientificamerican.com/article/can-tesla-build-enough-electric-cars/`
+*  `https://petolau.github.io/Forecast-double-seasonal-time-series-with-multiple-linear-regression-in-R/`
 
 
 
