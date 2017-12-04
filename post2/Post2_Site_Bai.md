@@ -119,10 +119,10 @@ rtn["00170825"]
 
 ------------------------------------------------------------------------
 
-###### From the daily return plot, do you still see the increasing trend? Probality not. Then how
+-   ###### From the daily return plot, do you still see the increasing trend? Probality not. Then how
 
-do we interpret the daily return plot? Will you buy this stock? We need to go one
-step further.
+    do we interpret the daily return plot? Will you buy this stock? We need to go one
+    step further.
 
 ``` r
 rtn <- rtn[-1]
@@ -132,11 +132,11 @@ lines(density(rtn),col="blue",lwd=2)
 
 ![](Post2_Site_Bai_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
-###### At the same time, we could use box plot.In order to create the boxplot, we need to convert the data
+-   ###### At the same time, we could use box plot.In order to create the boxplot, we need to convert the data
 
-from xts class to numeric class. As you can see there are few outliers outside the whiskers and most
-of the returns are close to zero, but mostly the return is higher than average, indicating the tesla stock
-is a profitable stock.
+    from xts class to numeric class. As you can see there are few outliers outside the whiskers and most
+    of the returns are close to zero, but mostly the return is higher than average, indicating the tesla stock
+    is a profitable stock.
 
 ``` r
 rtn_box <- as.numeric(rtn)
@@ -235,16 +235,10 @@ acf(rtn2,plot=FALSE,lag.max = 1)
 
 ###### Reference:
 
--   ####### `https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/time-series/how-to/autocorrelation/interpret-the-results/autocorrelation-function-acf/`
-
--   ####### `https://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html#plotting-time-series`
-
--   ####### `https://finance.yahoo.com/screener`
-
--   ####### `http://www.stat.pitt.edu/stoffer/tsa4/R_toot.htm`
-
--   ####### `https://www.statmethods.net/advstats/timeseries.html`
-
--   ####### `https://www.scientificamerican.com/article/can-tesla-build-enough-electric-cars/`
-
--   ####### `https://petolau.github.io/Forecast-double-seasonal-time-series-with-multiple-linear-regression-in-R/`
+-   `https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/time-series/how-to/autocorrelation/interpret-the-results/autocorrelation-function-acf/`
+-   `https://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html#plotting-time-series`
+-   `https://finance.yahoo.com/screener`
+-   `http://www.stat.pitt.edu/stoffer/tsa4/R_toot.htm`
+-   `https://www.statmethods.net/advstats/timeseries.html`
+-   `https://www.scientificamerican.com/article/can-tesla-build-enough-electric-cars/`
+-   `https://petolau.github.io/Forecast-double-seasonal-time-series-with-multiple-linear-regression-in-R/`
